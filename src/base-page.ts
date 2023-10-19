@@ -23,11 +23,17 @@ type ElementBinding = {
 	bind: "element";
 	to: string;
 };
+type IteratorBinding = {
+	bind: "iter";
+	from: string;
+	to: string;
+};
 
 type UIBindings =
 	| ViewBinding
 	| ComponentBinding
-	| ElementBinding;
+	| ElementBinding
+	| IteratorBinding;
 
 export function PageTemplate(strings: TemplateStringsArray, ...args: Array<string | UIBindings>) {
 	let str = "";
@@ -50,6 +56,9 @@ export function PageTemplate(strings: TemplateStringsArray, ...args: Array<strin
 			} break;
 			case "element": {
 				str += `\${ ==> ${binding.to} }`;
+			} break;
+			case "iter": {
+				str += `\${ ${binding.to} <=* ${binding.from} }`;
 			} break;
 		}
 	}

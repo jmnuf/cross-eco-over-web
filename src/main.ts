@@ -9,16 +9,26 @@ const createRouter = (app: App) => missNorishre({
 			const { Home } = await import("./pages/index");
 			const page = new Home(app);
 			return page;
+		},
+	},
+	eco: {
+		path: "/eco",
+		async model() {
+			const { Eco } = await import("./pages/eco");
+			const page = new Eco(app);
+			return page;
 		}
-	}
+	},
 });
 type Mistress = ReturnType<typeof createRouter>;
 
 class App {
 	file: string[];
+	file_name: string;
 	router: Mistress;
 
 	constructor() {
+		this.file_name = "";
 		this.file = [];
 		this.router = createRouter(this);
 	}
