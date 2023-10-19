@@ -39,8 +39,6 @@ function parse_eco_log(str: string): Result<EcoLog> {
 	}
 }
 
-const sticky_header_classes = "";
-
 export class Eco extends BasePage {
 	declare private app: AppModel;
 	declare private dialog_element: HTMLDialogElement;
