@@ -1,3 +1,25 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.table {
+	@apply border;
+	@apply border-black;
+	@apply py-6;
+	@apply my-2;
+}
+.table th:not(:last-child), .table td:not(:last-child) {
+	@apply border-r;
+	@apply border-r-black;
+}
+.table tr {
+	@apply border;
+	@apply border-black;
+}
+.table tbody tr:nth-child(even) {
+	@apply bg-slate-200;
+}
+.table tbody tr:nth-child(odd) {
+	@apply bg-slate-100;
+}
+

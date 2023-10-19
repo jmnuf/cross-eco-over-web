@@ -33,7 +33,7 @@ class App {
 		this.router = createRouter(this);
 	}
 
-	static readonly template = `<div class="w-[100vw] h-[100vh]">
+	static readonly template = `<div class="w-[100vw] h-[100vh] bg-slate-100">
 		<\${ router === }/>
 	</div>`;
 }
