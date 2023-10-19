@@ -1,24 +1,43 @@
-import './style.css'
-import typescriptLogo from './typescript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.ts'
+// @ts-ignore
+import { UI } from "@peasy-lib/peasy-ui";
+import { missNorishre } from "@jmnuf/norishre";
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://www.typescriptlang.org/" target="_blank">
-      <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
-    </a>
-    <h1>Vite + TypeScript</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite and TypeScript logos to learn more
-    </p>
-  </div>
-`
+const createRouter = (app: App) => missNorishre({
+	home: {
+		path: "/",
+		async model() {
+			const { Home } = await import("./pages/index");
+			const page = new Home(app);
+			return page;
+		}
+	}
+});
+type Mistress = ReturnType<typeof createRouter>;
 
-setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
+class App {
+	file: string[];
+	router: Mistress;
+
+	constructor() {
+		this.file = [];
+		this.router = createRouter(this);
+	}
+
+	static readonly template = `<div class="w-[100vw] h-[100vh]">
+		<\${ router === }/>
+	</div>`;
+}
+
+export type AppModel = App;
+
+async function main() {
+	const app = new App();
+	const [arrow, params] = app.router.find_arrow_id_by_url(location.pathname);
+	if (arrow != "%404%") {
+		await app.router.pull_from_quiver(arrow, params);
+	}
+	UI.create(document.body, app, App.template);
+}
+
+main().catch(console.error);
+
