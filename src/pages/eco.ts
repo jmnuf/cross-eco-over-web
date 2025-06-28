@@ -47,14 +47,24 @@ export class Eco extends BasePage {
   declare private dialog_element: HTMLDialogElement;
   declare private dialog_contents: { template: string } | null;
   readonly headers: string[];
-  private contents: EcoLog[];
+  private _contents: EcoLog[];
 
   constructor(app: AppModel) {
     super();
     this.app = app;
-    this.contents = [];
+    this._contents = [];
     this.headers = ["Timestamp", "Log Level", "Category", "Message", "Data"];
     this.dialog_contents = null;
+  }
+
+  get contents() {
+    return this._contents.map((log) => {
+      return {
+        ...log,
+        timestamp: (new Date(log.timestamp)).toUTCString(),
+        data_table_display: log.data_table_display,
+      };
+    });
   }
 
   protected async _close_dialog_element() {
@@ -140,13 +150,13 @@ export class Eco extends BasePage {
 
   private async load_app_file() {
     const file_contents = this.app.file;
-    this.contents.length = 0;
+    this._contents.length = 0;
     for (const line of file_contents) {
       const res = parse_eco_log(line);
       if (!res.ok) {
         console.error(res.error);
       } else {
-        this.contents.push(res.value);
+        this._contents.push(res.value);
       }
     }
   }
